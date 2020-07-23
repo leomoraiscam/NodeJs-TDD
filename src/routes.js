@@ -1,3 +1,8 @@
-const routes = require("express").Router();
+import { Router } from "express";
+const routes = new Router();
 
-module.exports = routes;
+routes.get("/", async (req, res) => {
+  return res.json("home");
+});
+
+export default routes;
