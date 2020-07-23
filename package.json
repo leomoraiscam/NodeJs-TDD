@@ -4,9 +4,11 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "dev": "nodemon src/server.js --ignore __tests__",
     "start": "node src/server.js",
-    "test": "jest"
+    "dev": "nodemon src/server.js --ignore __tests__",
+    "pretest": "NODE_ENV=test sequelize db:migrate",
+    "test": "jest",
+    "posttest": "NODE_ENV=test sequelize db:migrate:undo:all"
   },
   "dependencies": {
     "dotenv": "^8.2.0",
@@ -15,9 +17,11 @@
     "sequelize": "^6.3.3"
   },
   "devDependencies": {
+    "@sucrase/jest-plugin": "^2.0.0",
     "jest": "^26.1.0",
     "nodemon": "^2.0.4",
     "sequelize-cli": "^6.2.0",
+    "sqlite3": "^5.0.0",
     "sucrase": "^3.15.0"
   }
 }
