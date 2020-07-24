@@ -12,12 +12,12 @@ describe("Authorization", () => {
     const user = await User.create({
       name: "User test",
       email: "email@testa.com.br",
-      password_hash: "123123",
+      password: "123123",
     });
 
     const response = await request(app).post("/sessions").send({
       email: user.email,
-      senha: "123456",
+      senha: "123123",
     });
 
     expect(response.status).toBe(200);
