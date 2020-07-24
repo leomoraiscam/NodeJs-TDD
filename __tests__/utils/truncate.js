@@ -1,6 +1,12 @@
 import "../../src/database/index";
 import User from "../../src/app/models/User";
 
+const models = [User];
+
 module.exports = () => {
-  return User.destroy({ truncate: true, force: true });
+  return Promise.all(
+    models.map((key) => {
+      return key.destroy({ truncate: true, force: true });
+    })
+  );
 };
