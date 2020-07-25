@@ -22,4 +22,19 @@ describe("Authorization", () => {
 
     expect(response.status).toBe(200);
   });
+
+  it("should not authenticate witch invalid credentials", async () => {
+    const user = await User.create({
+      name: "teste",
+      email: "email@email.com.br",
+      password: "123123",
+    });
+
+    const response = await request(app).post("/sessions").send({
+      email: user.email,
+      password: "123456",
+    });
+
+    expect(response.status).toBe(401);
+  });
 });
