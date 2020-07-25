@@ -27,7 +27,7 @@ describe("Authorization", () => {
     const user = await User.create({
       name: "teste",
       email: "email@email.com.br",
-      password: "123123",
+      password: "1231 23",
     });
 
     const response = await request(app).post("/sessions").send({
@@ -36,5 +36,20 @@ describe("Authorization", () => {
     });
 
     expect(response.status).toBe(401);
+  });
+
+  it("should return jwt token when authenticad", async () => {
+    const user = await User.create({
+      name: "teste",
+      email: "email@email.com.br",
+      password: "123123",
+    });
+
+    const response = await request(app).post("/sessions").send({
+      email: user.email,
+      password: "123123",
+    });
+
+    expect(response.body).toHaveProperty("token");
   });
 });
