@@ -19,7 +19,7 @@ class SessionController {
       return res.status(401).json({ message: "Incorrect password" });
     }
 
-    const token = sign({}, process.env.APP_SECRET, {
+    const token = sign({ id: user.id }, process.env.APP_SECRET, {
       subject: String(user.id),
       expiresIn: "1d",
     });
