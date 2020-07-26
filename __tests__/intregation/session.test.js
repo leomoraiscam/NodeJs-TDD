@@ -46,4 +46,26 @@ describe("Authorization", () => {
 
     expect(response.body).toHaveProperty("token");
   });
+
+  it("should be able to acess private routes when authenticated", async () => {
+    const user = await factory.create("User", {
+      password: "123123",
+    });
+
+    const response = await request(app)
+      .get("/dashboard")
+      .set("Authorization", `Bearer ${user.token}`);
+
+    expect(response.status).toBe(200);
+  });
+
+  it("should not be able to acess private routes when authenticated", async () => {
+    const user = await factory.create("User", {
+      password: "123123",
+    });
+
+    const response = await request(app).get("/dashboard");
+
+    expect(response.status).toBe(401);
+  });
 });
